@@ -1,0 +1,18 @@
+/*Напишите запрос, с помощью которого можно найти дубли в поле email из таблицы Sfaff.*/
+
+SELECT email, COUNT(*) as count FROM Staff
+GROUP BY email
+HAVING COUNT(*) > 1
+
+/*Напишите запрос, с помощью которого можно определить возраст каждого сотрудника из таблицы Staff на момент запроса.*/
+
+SELECT name, DATEDIFF(year, birthday, CONVERT (date, SYSDATETIME()))
+FROM Staff
+
+/*Напишите запрос, с помощью которого можно определить должность (Jobtitles.name) со вторым по величине уровнем зарплаты.*/
+
+SELECT J.name FROM Jobtitles J
+INNER JOIN Staff S
+ON J.jobtitle_id = S.jobtitle_id
+WHERE salary < (SELECT MAX(salary) FROM Staff)
+GROUP BY J.name
